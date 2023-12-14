@@ -16,6 +16,16 @@ user_input_form.addEventListener("submit", (e)  => {
     cards_container.appendChild(card);
 });
 
+cards_container.addEventListener("click", (e) => {
+    const clicked = e.target;
+
+    if (clicked.getAttribute("btn_type") === "delete") {
+        clicked.parentElement.parentElement.remove();
+    } else if (clicked.getAttribute("btn_type") === "edit"){
+        handleEdit(clicked);
+    }
+});
+
 function createCard({destinationName, locationName, photoUrl, desc}) {
 
     const card = document.createElement("div");
@@ -29,10 +39,28 @@ function createCard({destinationName, locationName, photoUrl, desc}) {
     
         ${desc && `<p class="card-text">${desc}</p>`}
     
-        <button type="button" class="btn btn-info">Edit</button>
-        <button type="button" class="btn btn-danger">Delete</button>
+        <button type="button" btn_type="edit" class="btn btn-info">Edit</button>
+        <button type="button" btn_type="delete" class="btn btn-danger">Delete</button>
       </div>
     `;
 
     return card;
 }
+
+function handleEdit(editBtn) {
+    const cardBody = editBtn.parentElement;
+    const oldDestName = cardBody.children[0].textContent;
+    const oldLocName = cardBody.children[1].textContent;
+    const oldPhotoUrl = cardBody.previousSiblingElement.getAttribute("src");
+    const oldDesc = cardBody.children[2].tagName === "P" > cardBody.children[2].textContent : "";
+
+
+    const newDestName = prompt("Enter new destination name", oldDestName);
+    const newLocName = prompt("Enter new destination name", oldLocName);
+    const newPhotoUrl = prompt("Enter new destination name", oldPhotoUrl);
+    const newDesc = prompt("Enter new destination name", oldDesc);
+
+    if (newDestName && newDestName !== oldDestName){
+        cardBody.children[0].textContent = newDestName;
+    }
+}   
