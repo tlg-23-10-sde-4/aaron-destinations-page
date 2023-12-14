@@ -16,6 +16,19 @@ user_input_form.addEventListener("submit", (e)  => {
     cards_container.appendChild(card);
 });
 
+cards_container.addEventListener("click", (e) => {
+    const clicked = e.target;
+
+    if (clicked.getAttribute("btn_type") === "delete") {
+        clicked.parentElement.parentElement.remove();
+    }
+
+    if (clicked.getAttribute("btn_type") === "edit") {
+        
+    }
+
+});
+
 function createCard({destinationName, locationName, photoUrl, desc}) {
 
     const card = document.createElement("div");
@@ -29,10 +42,11 @@ function createCard({destinationName, locationName, photoUrl, desc}) {
     
         ${desc && `<p class="card-text">${desc}</p>`}
     
-        <button type="button" class="btn btn-info">Edit</button>
-        <button type="button" class="btn btn-danger">Delete</button>
+        <button type="button" btn_type="edit" class="btn btn-info">Edit</button>
+        <button type="button" btn_type="delete" class="btn btn-danger">Delete</button>
       </div>
     `;
 
     return card;
 }
+
